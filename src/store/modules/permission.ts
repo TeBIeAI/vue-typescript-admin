@@ -1,20 +1,20 @@
+import { AppRouteRecordRaw } from '@/types/router'
 import { login } from '@/api'
 import { defineStore } from 'pinia'
-import { RouteRecordRaw } from 'vue-router'
 import { asyncRoutes } from '@/router/routes'
 import { cloneDeep } from 'lodash-es'
 import { reactive, toRefs } from 'vue'
 
 interface IPermissionStroe {
-  authRoutes: RouteRecordRaw[]
+  authRoutes: AppRouteRecordRaw[]
 }
 
 function filterAsyncRoutes(
-  routes: RouteRecordRaw[],
+  routes: AppRouteRecordRaw[],
   roleList: string[],
   prefix = ''
-): RouteRecordRaw[] {
-  const res: RouteRecordRaw[] = []
+): AppRouteRecordRaw[] {
+  const res: AppRouteRecordRaw[] = []
   routes.map((route) => {
     const _cloneRoute = cloneDeep(route)
     const path: string =

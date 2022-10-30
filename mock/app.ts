@@ -10,7 +10,11 @@ const appMock: MockMethod[] = [
         code: 200,
         msg: 'OK',
         data: {
-          roleList: ['/dashboard', '/dashboard/dashboard-index']
+          roleList: [
+            '/dashboard',
+            '/dashboard/dashboard-index',
+            '/dashboard/dashboard-index/dashboard-index1'
+          ]
         }
       }
     }
