@@ -8,14 +8,14 @@ module.exports = defineConfig({
   parserOptions: {
     parser: '@typescript-eslint/parser',
     //模块化方案
-    sourceType: 'module',
+    sourceType: 'module'
   },
   env: {
     browser: true,
     es2021: true,
     node: true,
     // 解决 defineProps and defineEmits generate no-undef warnings
-    'vue/setup-compiler-macros': true,
+    'vue/setup-compiler-macros': true
   },
   // https://eslint.bootcss.com/docs/user-guide/configuring#specifying-globals
   globals: {},
@@ -24,7 +24,7 @@ module.exports = defineConfig({
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended', // typescript-eslint推荐规则,
     'prettier',
-    'plugin:prettier/recommended',
+    'plugin:prettier/recommended'
   ],
   // https://cn.eslint.org/docs/rules/
   rules: {
@@ -48,32 +48,38 @@ module.exports = defineConfig({
           // add a custom message, AND tell the plugin how to fix it
           String: {
             message: 'Use string instead',
-            fixWith: 'string',
+            fixWith: 'string'
           },
 
           '{}': {
             message: 'Use object instead',
-            fixWith: 'object',
-          },
-        },
-      },
+            fixWith: 'object'
+          }
+        }
+      }
     ],
     // 禁止出现未使用的变量
     '@typescript-eslint/no-unused-vars': [
       'error',
-      { vars: 'all', args: 'after-used', ignoreRestSiblings: false },
+      { vars: 'all', args: 'after-used', ignoreRestSiblings: false }
     ],
     'vue/html-indent': 'off',
     // 关闭此规则 使用 prettier 的格式化规则，
     'vue/max-attributes-per-line': ['off'],
+    'vue/multi-word-component-names': [
+      'error',
+      {
+        ignores: ['index'] //需要忽略的组件名
+      }
+    ],
     // 优先使用驼峰，element 组件除外
     'vue/component-name-in-template-casing': [
       'error',
       'PascalCase',
       {
         ignores: ['/^el-/', '/^router-/'],
-        registeredComponentsOnly: false,
-      },
+        registeredComponentsOnly: false
+      }
     ],
     // 强制使用驼峰
     camelcase: ['error', { properties: 'always' }],
@@ -82,8 +88,8 @@ module.exports = defineConfig({
       'error',
       {
         destructuring: 'any',
-        ignoreReadBeforeAssign: false,
-      },
-    ],
-  },
+        ignoreReadBeforeAssign: false
+      }
+    ]
+  }
 })
