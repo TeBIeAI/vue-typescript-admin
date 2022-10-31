@@ -17,3 +17,16 @@ export function login(params: any) {
     params
   })
 }
+
+interface UserInfoRes {
+  userInfo: any
+  asyncRoutes: any[]
+}
+
+export function getUserInfo(params: any) {
+  return request({
+    url: '/api/user/userinfo',
+    method: 'post',
+    params
+  })
+}

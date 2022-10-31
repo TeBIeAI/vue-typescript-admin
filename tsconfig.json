@@ -13,7 +13,7 @@
     "skipLibCheck": true,
     "noEmit": true,
     "baseUrl": ".",
-    "types": ["element-plus/global"],
+    "types": ["element-plus/global", "node"],
     "paths": {
       // 用于设置模块名到基于baseUrl的路径映射
       "@/*": [

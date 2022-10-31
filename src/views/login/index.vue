@@ -38,9 +38,10 @@
 import { reactive, ref } from 'vue'
 import { FormInstance } from 'element-plus'
 import { login } from '@/api'
-// import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
+import Cookies from 'js-cookie'
 
-// const router = useRouter()
+const router = useRouter()
 
 interface LoginForm {
   username: string
@@ -60,13 +61,17 @@ const rules = reactive({
 })
 
 const loginFetch = async (params: LoginForm) => {
-  const { token, msg } = await login(params)
-  if (!token)
+  const { msg, data } = await login(params)
+
+  if (!data?.token) {
     ElMessage({
       message: msg,
       type: 'error'
     })
-  // return router.push('/')
+  } else {
+    Cookies.set('token', data.token)
+    router.push('/')
+  }
 }
 
 const submitForm = (formEl: FormInstance | undefined) => {

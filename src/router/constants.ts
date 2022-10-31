@@ -1,4 +1,4 @@
-import { AppRouteRecordRaw } from './../types/router.d'
+import { AppRouteRecordRaw } from '../types/router'
 
 // const routes: AppRouteRecordRaw[] = [
 //   {

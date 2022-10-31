@@ -1,5 +1,6 @@
 import { MockMethod } from 'vite-plugin-mock'
 import { StatusCode } from './type'
+import asyncRoutes from './routesData'
 
 const users = ['admin', 'user']
 
@@ -26,6 +27,25 @@ const appMock: MockMethod[] = [
         return {
           code: StatusCode.error,
           msg: '用户名错误'
+        }
+      }
+    }
+  },
+  {
+    url: '/api/user/userinfo',
+    method: 'post',
+    timeout: 500,
+    response: (res) => {
+      const { token } = res.body
+      return {
+        code: StatusCode.success,
+        msg: 'ok',
+        data: {
+          userInfo: {
+            name: token,
+            role: token
+          },
+          asyncRoutes
         }
       }
     }
