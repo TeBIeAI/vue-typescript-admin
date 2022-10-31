@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { CancelRequestSource, Result } from './type'
+import { CancelRequestSource } from './type'
 import type {
   AxiosRequestConfig,
   AxiosInstance,
@@ -27,9 +27,8 @@ export default class {
     )
 
     this.instance.interceptors.response.use(
-      (res: AxiosResponse<Result>) => {
-        const { data } = res.data
-        return data
+      (res: AxiosResponse) => {
+        return res.data
       },
       (error: AxiosError) => {
         return Promise.reject(error)

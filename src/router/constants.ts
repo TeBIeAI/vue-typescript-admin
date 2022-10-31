@@ -1,6 +1,25 @@
 import { AppRouteRecordRaw } from './../types/router.d'
 
-const routes: AppRouteRecordRaw[] = [
+// const routes: AppRouteRecordRaw[] = [
+//   {
+//     path: '/',
+//     name: 'Home',
+//     meta: {
+//       title: 'Home'
+//     },
+//     redirect: '/dashboard'
+//   }
+// ]
+
+export const constantsRoutes: AppRouteRecordRaw[] = [
+  {
+    path: '/login',
+    name: 'Login',
+    meta: {
+      title: '登录'
+    },
+    component: () => import('@/views/login/index.vue')
+  },
   {
     path: '/',
     name: 'Home',
@@ -10,17 +29,3 @@ const routes: AppRouteRecordRaw[] = [
     redirect: '/dashboard'
   }
 ]
-
-const constantsRoutes: AppRouteRecordRaw[] = [
-  {
-    path: '/:pathMatch(.*)',
-    name: 'Catch',
-    meta: {
-      title: '404'
-    },
-    redirect: '/not-found'
-  }
-]
-
-export const contants = routes
-export const constantsBefore = constantsRoutes

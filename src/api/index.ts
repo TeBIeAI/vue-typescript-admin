@@ -5,12 +5,13 @@ export interface LoginData {
   password: string
 }
 
-export interface LoginRes {
-  roleList: string[]
-}
+// export interface LoginRes {
+//   token: ,
+
+// }
 
 export function login(params: any) {
-  return request<LoginRes>({
+  return request<any>({
     url: '/api/login',
     method: 'GET',
     params
