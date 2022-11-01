@@ -1,5 +1,5 @@
 <template>
-  <el-menu default-active="2" class="el-menu-vertical-demo">
+  <el-menu router :default-active="path" class="el-menu-vertical-demo">
     <SubMenu
       v-for="route in authRoutes"
       :key="route.name"
@@ -9,10 +9,13 @@
 </template>
 
 <script lang="ts" setup name="MenuList">
-import { usePermissionStore } from '@/store/modules/permission'
+import { useUserStore } from '@/store/modules/user'
 import { AppRouteRecordRaw } from '@/types/router'
+import { Router, useRouter } from 'vue-router'
 import SubMenu from './subMenu.vue'
 
-const permissionStore = usePermissionStore()
-const authRoutes: AppRouteRecordRaw[] = permissionStore.authRoutes
+const userStore = useUserStore()
+const router: Router = useRouter()
+const { path } = router.currentRoute.value
+const authRoutes: AppRouteRecordRaw[] = userStore.asyncRoutes
 </script>

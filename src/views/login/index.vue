@@ -36,7 +36,7 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import { FormInstance } from 'element-plus'
+import { ElMessage, FormInstance } from 'element-plus'
 import { login } from '@/api'
 import { useRouter } from 'vue-router'
 import Cookies from 'js-cookie'

@@ -1,18 +1,34 @@
-import { usePermissionStore } from './../../store/modules/permission'
+import { useUserStore } from '../../store/modules/user'
+import Cookies from 'js-cookie'
 import { Router } from 'vue-router'
-import { constantsBefore } from '../constants'
 
-export function createGuard(router: Router) {
+const whiteList: string[] = ['/login']
+
+export function createBeforePermission(router: Router) {
   router.beforeEach(async (to, from, next) => {
-    const permissionStore = usePermissionStore()
-    if (!permissionStore.authRoutes.length) {
-      await permissionStore.generatRoutes()
-      ;[...permissionStore.authRoutes, ...constantsBefore].map((route) => {
-        router.addRoute(route)
-      })
-      next(to)
+    const token = Cookies.get('token')
+    if (token) {
+      if (to.path == '/login') {
+        next('/')
+      }
+      // 判断用户信息
+      const userStore = useUserStore()
+      if (!userStore.userInfo) {
+        await userStore.createUserInfo(token)
+        userStore.asyncRoutes.map((route) => {
+          router.addRoute(route)
+        })
+        console.log(router.getRoutes())
+        next(to)
+      } else {
+        next()
+      }
     } else {
-      next()
+      if (whiteList.includes(to.path)) {
+        next()
+      } else {
+        next('/login')
+      }
     }
   })
 }

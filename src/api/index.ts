@@ -11,7 +11,7 @@ export interface LoginData {
 // }
 
 export function login(params: any) {
-  return request<any>({
+  return request<any, any>({
     url: '/api/login',
     method: 'GET',
     params
@@ -23,8 +23,12 @@ interface UserInfoRes {
   asyncRoutes: any[]
 }
 
-export function getUserInfo(params: any) {
-  return request({
+interface IParams {
+  token: string
+}
+
+export function getUserInfo(params: IParams) {
+  return request<IParams, UserInfoRes>({
     url: '/api/user/userinfo',
     method: 'post',
     params

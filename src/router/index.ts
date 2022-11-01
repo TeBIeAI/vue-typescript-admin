@@ -5,7 +5,7 @@
 
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { constantsRoutes } from './constants'
-import { createBeforePermission } from './permission/peimission'
+import { createBeforePermission } from './permission'
 
 // 配置路由信息
 
@@ -13,7 +13,6 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes: constantsRoutes
 })
-console.log(router)
 createBeforePermission(router)
 
 export default router
