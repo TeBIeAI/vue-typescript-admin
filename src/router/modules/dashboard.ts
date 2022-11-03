@@ -30,7 +30,7 @@ const routes: RouteRecordRaw[] = [
     },
     children: [
       {
-        path: 'console',
+        path: 'console/:id?',
         name: `dashboard_console`,
         meta: {
           title: '主控台',

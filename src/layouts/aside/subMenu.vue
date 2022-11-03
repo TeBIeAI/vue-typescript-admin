@@ -1,7 +1,7 @@
 <template>
   <el-sub-menu
     v-if="menus && menus.children && menus.children.length"
-    :index="menus.path"
+    :index="`${parentPath}/${menus.path}`"
   >
     <template #title>
       <el-icon><Location /></el-icon>
@@ -11,9 +11,10 @@
       v-for="menuChild in menus.children"
       :key="menuChild.name"
       :menus="menuChild"
+      :parent-path="menus.path"
     ></SubMenu>
   </el-sub-menu>
-  <el-menu-item v-else :index="menus.path">
+  <el-menu-item v-else :index="`${parentPath}/${menus.path}`">
     <span>{{ menus.meta.title }}</span>
   </el-menu-item>
 </template>
@@ -22,8 +23,8 @@
 import { Location } from '@element-plus/icons-vue'
 import { AppRouteRecordRaw } from '@/types/router'
 
-const props = defineProps<{
+defineProps<{
   menus: AppRouteRecordRaw
+  parentPath: string
 }>()
-console.log(props.menus)
 </script>

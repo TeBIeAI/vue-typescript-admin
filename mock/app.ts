@@ -55,8 +55,6 @@ const appMock: MockMethod[] = [
     method: 'get',
     timeout: 500,
     response: (res) => {
-      console.log(1)
-
       const { username } = res.query
       const isUser = users.includes(username)
 

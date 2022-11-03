@@ -50,7 +50,6 @@ function createAsyncRouterTree(routeList: any[]) {
     }
   })
   val.push(ErrorComponent)
-  console.log(val)
   return val
 }
 

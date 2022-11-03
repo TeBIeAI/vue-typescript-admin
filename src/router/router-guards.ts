@@ -62,19 +62,16 @@ export function createRouterGuards(router: Router) {
       !keepAliveComponents.includes(currentComponentName as string) &&
       to.meta.keepAlive
     ) {
-      debugger
       keepAliveComponents.push(currentComponentName as string)
     } else if (!to.meta.keepAlive) {
-      debugger
       const index = keepAliveComponents.findIndex(
         (name) => name === currentComponentName
       )
       if (index > -1) {
         keepAliveComponents.splice(index, 1)
-        console.log(keepAliveComponents)
       }
     }
-    asyncRouteStore.setKeepAliveComponents(currentComponentName)
+    asyncRouteStore.setKeepAliveComponents(keepAliveComponents)
     console.log(keepAliveComponents)
   })
 

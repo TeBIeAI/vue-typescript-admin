@@ -83,7 +83,7 @@ export const useAsyncRouteStore = defineStore({
       this.menus = menus
     },
     setKeepAliveComponents(compNames) {
-      this.keepAliveComponents.push(compNames)
+      this.keepAliveComponents = compNames
     },
     generateRoutes() {
       let accessedRouters
@@ -112,7 +112,6 @@ export const useAsyncRouteStore = defineStore({
           console.log(error)
         }
       }
-      debugger
       accessedRouters = accessedRouters.filter(routeFilter)
       this.setRouters(accessedRouters)
       this.setMenus(accessedRouters)

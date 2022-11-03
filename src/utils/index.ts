@@ -9,7 +9,6 @@ export function generatorMenu(
   routerMap: Array<RouteRecordRaw>
 ): Array<RouteRecordRaw> {
   return routerMap.map((route) => {
-    debugger
     const isRoot = isRootRouter(route)
     const info = isRoot
       ? (route.children as unknown as RouteRecordRaw)[0]
