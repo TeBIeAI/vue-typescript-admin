@@ -1,8 +1,53 @@
 import { MockMethod } from 'vite-plugin-mock'
 import { StatusCode } from './type'
+import Mock from 'mockjs'
 import asyncRoutes from './routesData'
 
 const users = ['admin', 'user']
+const Random = Mock.Random
+
+const token = Random.string('upper', 32, 32)
+
+export function resultSuccess(result, { message = 'ok' } = {}) {
+  return Mock.mock({
+    code: 200,
+    result,
+    message,
+    type: 'success'
+  })
+}
+
+const adminInfo = {
+  userId: '1',
+  username: 'admin',
+  realName: 'Admin',
+  avatar: Random.image(),
+  desc: 'manager',
+  password: Random.string('upper', 4, 16),
+  token,
+  permissions: [
+    {
+      label: '主控台',
+      value: 'dashboard_console'
+    },
+    {
+      label: '监控页',
+      value: 'dashboard_monitor'
+    },
+    {
+      label: '工作台',
+      value: 'dashboard_workplace'
+    },
+    {
+      label: '基础列表',
+      value: 'basic_list'
+    },
+    {
+      label: '基础列表删除',
+      value: 'basic_list_delete'
+    }
+  ]
+}
 
 const appMock: MockMethod[] = [
   {
@@ -36,18 +81,7 @@ const appMock: MockMethod[] = [
     method: 'post',
     timeout: 500,
     response: (res) => {
-      const { token } = res.body
-      return {
-        code: StatusCode.success,
-        msg: 'ok',
-        data: {
-          userInfo: {
-            name: token,
-            role: token
-          },
-          asyncRoutes
-        }
-      }
+      return resultSuccess(adminInfo)
     }
   }
 ]

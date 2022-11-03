@@ -1,8 +1,9 @@
-import { AppRouteRecordRaw } from '../types/router'
-import Error from '@/views/error.vue'
-import { shallowRef } from 'vue'
+import { RouteRecordRaw } from 'vue-router'
 
-export const constantsRoutes: AppRouteRecordRaw[] = [
+export const Layout = () => import('@/layouts/index.vue')
+export const ErrorPage = () => import('@/views/error.vue')
+
+export const constantsRoutes: RouteRecordRaw[] = [
   {
     path: '/login',
     name: 'login',
@@ -29,11 +30,23 @@ export const constantsRoutes: AppRouteRecordRaw[] = [
   }
 ]
 
-export const ErrorComponent: AppRouteRecordRaw = {
-  path: '/:catchAll(.*)',
-  name: 'NotFound',
+export const ErrorPageRoute: RouteRecordRaw = {
+  path: '/:path(.*)*',
+  name: 'ErrorPage',
+  component: Layout,
   meta: {
-    title: '404 notFound'
+    title: 'ErrorPage',
+    hideBreadcrumb: true
   },
-  component: shallowRef(Error)
+  children: [
+    {
+      path: '/:path(.*)*',
+      name: 'ErrorPageSon',
+      component: ErrorPage,
+      meta: {
+        title: 'ErrorPage',
+        hideBreadcrumb: true
+      }
+    }
+  ]
 }

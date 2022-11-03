@@ -13,7 +13,7 @@ declare module 'vue-router' {
   interface RouteMeta {
     title: string
     icon?: string
-    noPerm?: boolean
+    ignoreAuth?: boolean
     url?: string
   }
 }
