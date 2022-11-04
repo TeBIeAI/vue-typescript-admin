@@ -3,6 +3,7 @@ import router, { setupRouter } from './router'
 import { setupStore } from './store'
 import App from './App.vue'
 import 'element-plus/theme-chalk/el-message.css'
+import 'element-plus/theme-chalk/dark/css-vars.css'
 
 async function bootstrap() {
   const app = createApp(App)

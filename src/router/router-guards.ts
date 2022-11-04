@@ -72,7 +72,6 @@ export function createRouterGuards(router: Router) {
       }
     }
     asyncRouteStore.setKeepAliveComponents(keepAliveComponents)
-    console.log(keepAliveComponents)
   })
 
   router.onError((error) => {

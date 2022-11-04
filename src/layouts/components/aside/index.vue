@@ -3,7 +3,7 @@
     unique-opened
     :default-active="openKeys"
     router
-    :collapse="!collapsed"
+    :collapse="collapsed"
     :mode="mode"
     class="el-menu-vertical-demo"
   >
@@ -18,23 +18,21 @@
 
 <script lang="ts" setup name="MenuList">
 import { useAsyncRouteStore } from '@/store/modules/asyncRoute'
-import { ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import SubMenu from './subMenu.vue'
 import { generatorMenu } from '@/utils'
 import { useRoute } from 'vue-router'
 
-withDefaults(
-  defineProps<{
-    mode?: string
-    location?: string
-    collapsed?: boolean
-  }>(),
-  {
-    mode: 'vertical',
-    location: 'left',
-    collapsed: true
-  }
-)
+interface Props {
+  mode?: string
+  location?: string
+  collapsed?: boolean
+}
+
+withDefaults(defineProps<Props>(), {
+  mode: 'vertical',
+  location: 'left'
+})
 
 const asyncRoutes = useAsyncRouteStore()
 
@@ -44,5 +42,13 @@ const openKeys = route.matched && route.matched.length && route.matched[1].path
 function updateMenu() {
   menus.value = generatorMenu(asyncRoutes.getMenus)
 }
-updateMenu()
+
+watch(
+  () => route.fullPath,
+  () => {
+    updateMenu()
+  }
+)
+
+onMounted(() => updateMenu())
 </script>

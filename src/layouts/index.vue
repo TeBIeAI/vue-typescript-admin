@@ -2,33 +2,32 @@
   <div class="common-layout">
     <div class="common-layout">
       <el-container>
-        <el-drawer
-          v-model="collapsed"
-          :show-close="false"
-          title="I am the title"
-          direction="ltr"
-          :modal="false"
-          :with-header="false"
-          :close-on-click-modal="false"
-          :close-on-press-escape="false"
-          size="200"
-          modal-class="aaa"
+        <el-aside
+          v-if="!isMobile"
+          :width="leftMenuWidth + 'px'"
+          class="layout-sider"
         >
-          <el-aside
-            v-if="
-              !isMobile &&
-              isMixMenuNoneSub &&
-              (navMode === 'vertical' || navMode === 'horizontal-mix')
-            "
-            width="200px"
+          <PageAsideMenu
+            style="min-height: 100vh"
+            :collapsed="collapsed"
+          ></PageAsideMenu>
+        </el-aside>
+        <div v-show="showSideDrawder">
+          <el-drawer
+            v-model="collapsed"
+            direction="ltr"
+            :with-header="false"
+            :close-on-press-escape="false"
+            :size="menuWidth"
+            custom-class="layout-side-drawer"
           >
-            <AsideMenu></AsideMenu>
-          </el-aside>
-        </el-drawer>
+            <PageAsideMenu></PageAsideMenu>
+          </el-drawer>
+        </div>
 
         <el-container>
           <el-header>
-            <Header />
+            <PageHeader v-model:collapsed="collapsed"></PageHeader>
           </el-header>
           <el-main>
             <router-view></router-view>
@@ -42,30 +41,51 @@
 <script setup lang="ts" name="Layout">
 import { useProjectSetting } from '@/hooks/setting/useProjectSetting'
 import { useProjectSettingStore } from '@/store/modules/projectSetting'
-import { computed, ref, unref } from 'vue'
-import AsideMenu from './aside/index.vue'
-import Header from './header/index.vue'
+import { computed, onMounted, provide, ref, unref } from 'vue'
+import { PageAsideMenu } from './components/aside'
+import { PageHeader } from './components/header'
 
-const {
-  getNavMode,
-  getNavTheme,
-  getHeaderSetting,
-  getMenuSetting,
-  getMultiTabsSetting
-} = useProjectSetting()
+const { getMenuSetting } = useProjectSetting()
 
 const settingStore = useProjectSettingStore()
-const navMode = getNavMode
-const collapsed = ref(true)
+const collapsed = ref(false)
+const { mobileWidth, menuWidth } = unref(getMenuSetting)
 
 const isMobile = computed({
   get: () => settingStore.getIsMobile,
   set: (val) => settingStore.setIsMobile(val)
 })
 
-const isMixMenuNoneSub = computed(() => {
-  if (unref(navMode) !== 'horizontal-mix') return true
-  return true
+const leftMenuWidth = computed(() => {
+  const { menuWidth, minMenuWidth } = unref(getMenuSetting)
+  return !collapsed.value ? menuWidth : minMenuWidth
+})
+
+const showSideDrawder = computed({
+  get: () => isMobile.value && collapsed.value,
+  set: (val) => (collapsed.value = val)
+})
+
+const checkMobileMode = () => {
+  if (document.body.clientWidth <= mobileWidth) {
+    isMobile.value = true
+    collapsed.value = false
+  } else {
+    isMobile.value = false
+    collapsed.value = false
+  }
+}
+const closeMenu = () => {
+  if (isMobile.value) {
+    collapsed.value = false
+  }
+}
+
+provide('closeMenu', closeMenu)
+
+onMounted(() => {
+  checkMobileMode()
+  window.addEventListener('resize', checkMobileMode)
 })
 </script>
 
@@ -74,11 +94,14 @@ const isMixMenuNoneSub = computed(() => {
   padding: 0 !important;
 }
 
-.leftMenu {
-  width: 200px;
+:deep(.layout-side-drawer) {
+  background-color: rgb(0, 20, 40);
 }
-.aaa {
-  padding: 0;
-  background-color: red !important;
+
+.layout-sider {
+  min-height: 100vh;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+  overflow-x: hidden;
 }
 </style>

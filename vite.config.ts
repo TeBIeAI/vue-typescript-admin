@@ -23,6 +23,13 @@ export default defineConfig(({ mode }: ConfigEnv) => {
     server: {
       host: true,
       port: VITE_PORT
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: '@import "@/styles/var.scss";'
+        }
+      }
     }
     /* more config */
   }

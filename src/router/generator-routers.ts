@@ -31,26 +31,6 @@ export function createRouterGuards(router: Router) {
 
     await userStore.getInfo()
 
-    await asyncRouteStore.generateRoutes(userInfo)
-
-    // if (token) {
-    //   if (to.path == '/login') {
-    //     next('/')
-    //   }
-    //   // 判断用户信息
-    //   const userStore = useUserStore()
-    //   if (!userStore.userInfo) {
-    //     await userStore.createUserInfo(token)
-    //     userStore.asyncRoutes.map((route) => {
-    //       router.addRoute(route)
-    //     })
-    //     console.log(router.getRoutes())
-    //     next(to)
-    //   } else {
-    //     next()
-    //   }
-    // } else {
-    //   next('/login')
-    // }
+    await asyncRouteStore.generateRoutes()
   })
 }
