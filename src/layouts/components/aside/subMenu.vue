@@ -4,8 +4,10 @@
     :index="`${parentPath}/${menus.path}`"
   >
     <template #title>
-      <el-icon><Location /></el-icon>
-      <span>{{ menus.meta.title }}</span>
+      <div class="aside-menu-item">
+        <el-icon><Location /></el-icon>
+        <span>{{ menus.meta.title }}</span>
+      </div>
     </template>
     <SubMenu
       v-for="menuChild in menus.children"
@@ -41,3 +43,5 @@ const handleNodeClick = () => {
   closeMenu()
 }
 </script>
+
+<style lang="scss"></style>

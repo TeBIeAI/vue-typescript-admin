@@ -86,6 +86,9 @@ export const useProjectSettingStore = defineStore({
     },
     setIsMobile(value: boolean): void {
       this.isMobile = value
+    },
+    setNavMode(value: string): void {
+      this.navMode = value
     }
   }
 })

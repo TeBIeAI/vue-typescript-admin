@@ -1,7 +1,14 @@
 <template>
   <div class="layout-header">
+    <!-- 顶部菜单 -->
+    <PageAsideMenu
+      v-if="getNavMode === 'horizontal'"
+      mode="horizontal"
+      class="layout-header-left-menu"
+    ></PageAsideMenu>
+
     <!-- left -->
-    <div class="layout-header-left">
+    <div v-else class="layout-header-left">
       <div @click="menuIconClick">
         <el-icon :size="24">
           <Fold v-if="!collapsed" />
@@ -18,6 +25,7 @@
         >
       </el-breadcrumb>
     </div>
+    <div class="-primary-text-color">1111</div>
 
     <!-- right -->
     <div class="layout-header-right">
@@ -38,17 +46,22 @@
 
 <script setup lang="ts" name="PageHeader">
 import ProjectSetting from './projectSetting.vue'
+import { PageAsideMenu } from '@/layouts/components/aside'
 import { useProjectSetting } from '@/hooks/setting/useProjectSetting'
 import { RouteLocationMatched, useRoute } from 'vue-router'
 import { Fold, Expand, Setting } from '@element-plus/icons-vue'
-import { computed, ref } from 'vue'
+import { useDesignSettingStoreWithOut } from '@/store/modules/designSetting'
+import { computed, ref, watch } from 'vue'
 
 interface Props {
   collapsed: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {})
-const { getCrumbsSetting } = useProjectSetting()
+const { getCrumbsSetting, getNavMode } = useProjectSetting()
+const designSetting = useDesignSettingStoreWithOut()
+const textColor = () => designSetting.getAppTheme
+
 const route = useRoute()
 const breadCrumb = getCrumbsSetting
 
@@ -58,6 +71,13 @@ const openSetting = () => {
   const { openDrawer } = drawerSetting.value
   openDrawer()
 }
+
+watch(
+  () => designSetting.getAppTheme,
+  (val) => {
+    console.log(val)
+  }
+)
 
 const emits = defineEmits<{
   (e: 'update:collapsed', collapse: boolean)
@@ -83,6 +103,11 @@ const menuIconClick = () => {
   height: $header-height;
   box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
   padding: 0 !important;
+
+  &-left-menu {
+    display: flex;
+    flex: 1;
+  }
 
   &-left {
     display: flex;

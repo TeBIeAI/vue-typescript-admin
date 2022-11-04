@@ -3,7 +3,7 @@
     <div class="common-layout">
       <el-container>
         <el-aside
-          v-if="!isMobile"
+          v-if="!isMobile && getNavMode === 'vertical'"
           :width="leftMenuWidth + 'px'"
           class="layout-sider"
         >
@@ -45,7 +45,7 @@ import { computed, onMounted, provide, ref, unref } from 'vue'
 import { PageAsideMenu } from './components/aside'
 import { PageHeader } from './components/header'
 
-const { getMenuSetting } = useProjectSetting()
+const { getMenuSetting, getNavMode } = useProjectSetting()
 
 const settingStore = useProjectSettingStore()
 const collapsed = ref(false)
