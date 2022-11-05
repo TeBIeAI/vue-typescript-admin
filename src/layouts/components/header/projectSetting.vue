@@ -61,7 +61,7 @@ import toggleDark from '@/hooks/useDark'
 import { useProjectSettingStore } from '@/store/modules/projectSetting'
 import { Check } from '@element-plus/icons-vue'
 
-const isDrawer = ref(true)
+const isDrawer = ref()
 
 const openDrawer = () => {
   isDrawer.value = !isDrawer.value

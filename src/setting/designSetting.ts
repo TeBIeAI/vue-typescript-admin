@@ -25,6 +25,14 @@ const setting = {
   darkTheme: false,
   //系统主题色
   appTheme: '#2d8cf0',
+  // 左侧菜单配色
+  appMenuTheme: '#001428',
+  // 菜单选择背景色
+  appMenuActiveTheme: '#2d8cf0',
+  // 字体颜色
+  appMenuTextColor: '#fff',
+  // 菜单激活字体颜色
+  appActiveTextColor: '#fff',
   //系统内置主题色列表
   appThemeList
 }

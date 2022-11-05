@@ -5,7 +5,9 @@
     router
     :collapse="collapsed"
     :mode="mode"
-    class="el-menu-vertical-demo"
+    :background-color="designSettingStore.getAppMenuTheme"
+    :text-color="designSettingStore.getMenuText"
+    :active-text-color="designSettingStore.getActiveTextColor"
   >
     <SubMenu
       v-for="menu in menus"
@@ -22,6 +24,7 @@ import { onMounted, ref, watch } from 'vue'
 import SubMenu from './subMenu.vue'
 import { generatorMenu } from '@/utils'
 import { useRoute } from 'vue-router'
+import { useDesignSettingStore } from '@/store/modules/designSetting'
 
 interface Props {
   mode?: string
@@ -34,6 +37,7 @@ withDefaults(defineProps<Props>(), {
   location: 'left'
 })
 
+const designSettingStore = useDesignSettingStore()
 const asyncRoutes = useAsyncRouteStore()
 
 const route = useRoute()
@@ -52,3 +56,13 @@ watch(
 
 onMounted(() => updateMenu())
 </script>
+
+<style scoped lang="scss">
+.el-menu {
+  border-right: none;
+}
+:deep(.el-menu-item.is-active) {
+  background-color: v-bind('designSettingStore.getAppMenuActiveTheme');
+  border: none;
+}
+</style>

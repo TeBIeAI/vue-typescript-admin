@@ -1,15 +1,16 @@
 <template>
-  <div class="layout-header">
+  <div class="navbar-header">
+    <div v-if="getNavMode === 'horizontal'" class="horizontal-nav-left">
+      <PageAsideMenu
+        mode="horizontal"
+        class="navbar-header-left-menu"
+      ></PageAsideMenu>
+    </div>
     <!-- 顶部菜单 -->
-    <PageAsideMenu
-      v-if="getNavMode === 'horizontal'"
-      mode="horizontal"
-      class="layout-header-left-menu"
-    ></PageAsideMenu>
 
     <!-- left -->
-    <div v-else class="layout-header-left">
-      <div @click="menuIconClick">
+    <div v-else class="navbar-header-left">
+      <div class="navbar-header-left-toggle-menu" @click="menuIconClick">
         <el-icon :size="24">
           <Fold v-if="!collapsed" />
           <Expand v-else />
@@ -25,8 +26,6 @@
         >
       </el-breadcrumb>
     </div>
-    <div class="-primary-text-color">1111</div>
-
     <!-- right -->
     <div class="layout-header-right">
       <!-- 设置 -->
@@ -60,7 +59,6 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {})
 const { getCrumbsSetting, getNavMode } = useProjectSetting()
 const designSetting = useDesignSettingStoreWithOut()
-const textColor = () => designSetting.getAppTheme
 
 const route = useRoute()
 const breadCrumb = getCrumbsSetting
@@ -96,13 +94,19 @@ const menuIconClick = () => {
 </script>
 
 <style scoped lang="scss">
-.layout-header {
+.navbar-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: $header-height;
+  height: 50px;
   box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
-  padding: 0 !important;
+  margin: 20px 16px 0 16px;
+
+  .horizontal-nav-left {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
 
   &-left-menu {
     display: flex;
@@ -111,6 +115,12 @@ const menuIconClick = () => {
 
   &-left {
     display: flex;
+    align-items: center;
+
+    &-toggle-menu {
+      box-sizing: border-box;
+      margin: 0 16px;
+    }
   }
 }
 </style>
