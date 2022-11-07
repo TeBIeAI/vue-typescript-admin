@@ -25,6 +25,7 @@ export interface ColumnProps {
   sortable?: boolean
   fiexd?: FiexdProp
   align?: AlignProp
+  isShow?: boolean
   render?: string
   // 自定义数据:比如渲染为Tag时,可以指定不同值时的Tag的Type属性 { open: 'success', close: 'info' }
   custom?: any

@@ -1,10 +1,5 @@
 <template>
-  <HlTable
-    :table-data="tableData.data"
-    :columns="columns"
-    @current-change="getList"
-  >
-  </HlTable>
+  <HlTable :table-data="tableData.data" :columns="columns" @current-change="getList"> </HlTable>
 </template>
 
 <script lang="ts" setup name="componentName">

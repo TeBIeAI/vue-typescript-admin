@@ -16,10 +16,7 @@
 
   <!-- tag -->
   <div v-else-if="field.render === 'tag' && fieldValue !== ''">
-    <el-tag
-      :size="field.size ?? 'small'"
-      :type="getTagType(fieldValue, field.custom)"
-    >
+    <el-tag :size="field.size ?? 'small'" :type="getTagType(fieldValue, field.custom)">
       {{ field.replaceValue[fieldValue] ?? fieldValue }}
     </el-tag>
   </div>
@@ -29,11 +26,7 @@
     <template v-for="(btn, idx) in field.buttons" :key="idx">
       <template v-if="btn.display ? btn.display(row, field) : true">
         <el-tooltip v-if="btn.render === 'tipButton'" :content="btn.text">
-          <el-button
-            size="small"
-            :type="btn.type ?? ''"
-            @click="getButtonClick(btn)"
-          >
+          <el-button size="small" :type="btn.type ?? ''" @click="getButtonClick(btn)">
             {{ btn.text }}
           </el-button>
         </el-tooltip>
