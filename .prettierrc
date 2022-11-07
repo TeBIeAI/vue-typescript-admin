@@ -3,5 +3,9 @@
   "singleQuote": true, 
   "quoteProps": "as-needed",
   "trailingComma": "none", 
-  "endOfLine": "auto"
+  "endOfLine": "lf",
+  "printWidth": 150,
+  "jsxSingleQuote": false,
+  "bracketSpacing": true,
+  "proseWrap": "preserve"
 }

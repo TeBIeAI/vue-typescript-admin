@@ -18,7 +18,6 @@
           :with-header="false"
           :close-on-press-escape="false"
           :size="menuWidth"
-          :collapsed="collapsed"
           custom-class="layout-side-drawer"
         >
           <PageAsideMenu></PageAsideMenu>
