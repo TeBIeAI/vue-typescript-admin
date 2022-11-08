@@ -19,11 +19,25 @@ export function useColumns(columns: ColumnProps[]) {
     })
   }
 
-  const setColumns = (columnList: ColumnProps[]) => {
+  const setColumns = (columnList: any[]) => {
     const columns = cloneDeep(unref(columnList))
     if (!isArray(columns)) return
     if (!columns.length) return (columnsRef.value = [])
-    columnsRef.value = columns
+
+    const newColumns: any[] = []
+    if (typeof columns[0] !== 'string') {
+      const last = columnsRef.value[columnsRef.value.length - 1]
+      if (last.buttons) {
+        columnsRef.value = [...columns, last]
+      }
+    } else {
+      cacheColumns.forEach((item) => {
+        if (columns.includes((item as any).prop)) {
+          newColumns.push(item)
+        }
+      })
+      columnsRef.value = newColumns
+    }
   }
 
   return {

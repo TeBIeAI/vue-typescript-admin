@@ -9,7 +9,13 @@
         <el-button type="primary" :icon="Printer" circle />
       </el-tooltip>
       <el-tooltip content="字段控制">
-        <el-button type="primary" :icon="Operation" circle @click="openDrawerHandle" />
+        <el-button
+          v-popover="popoverRef"
+          v-click-outside="onClickOutside"
+          type="primary"
+          :icon="Operation"
+          circle
+        />
       </el-tooltip>
       <el-tooltip content="搜索">
         <el-button type="primary" :icon="Search" circle />
@@ -44,7 +50,9 @@
   </div>
 
   <!-- 列显示配置 -->
-  <ColumnSetting v-if="columns.length" ref="colRef" :column="TableColumn" />
+  <el-popover ref="popoverRef" trigger="click" virtual-triggering persistent>
+    <ColumnSetting ref="colRef" :column="(TableColumn as ColumnProps[])" />
+  </el-popover>
 </template>
 
 <script lang="ts" setup name="HlTable">
@@ -56,6 +64,7 @@ import { ColumnProps } from '/#/table'
 import { Search, Refresh, Printer, Operation } from '@element-plus/icons-vue'
 import { useColumns } from '@/components/hooks/useColumn'
 import { createTableContext } from '@/components/hooks/usetableContext'
+import { ClickOutside as vClickOutside } from 'element-plus'
 
 const HlTableRef = ref<InstanceType<typeof ElTable>>()
 
@@ -71,13 +80,18 @@ const props = withDefaults(defineProps<HTableProps>(), {
   pagination: true
 })
 
-const TableColumn = ref<ColumnProps[]>()
-TableColumn.value = props.columns.map((i) => {
-  i.isShow = i.isShow ?? true
-  return i
-})
+// const TableColumn = ref<ColumnProps[]>()
+// TableColumn.value = props.columns.map((i) => {
+//   i.isShow = i.isShow ?? true
+//   return i
+// })
+
+// const cmp = compu
 
 const { getColumns, setColumns } = useColumns(props.columns)
+const TableColumn = computed(() => getColumns())
+
+const popoverRef = ref()
 
 const actions = {
   getColumns,
@@ -105,10 +119,8 @@ const currentChange = (size: number) => {
   emits('current-change', size)
 }
 
-const colRef = ref()
-
-const openDrawerHandle = () => {
-  colRef.value.openDrawer()
+const onClickOutside = () => {
+  unref(popoverRef).popperRef?.delayHide?.()
 }
 </script>
 <style scoped></style>

@@ -1,16 +1,25 @@
+import { ElImage } from 'element-plus'
 import { h } from 'vue'
 import { ColumnProps } from '/#/table'
 
 // 表格配置项
 export const columns: ColumnProps[] = [
   // { type: 'selection', width: 80, fixed: 'left' },
-  { type: 'index', label: 'No', width: 80 },
   // { type: 'expand', label: 'Expand', width: 100 },
+  {
+    prop: 'index',
+    label: 'No',
+    width: 80,
+    formatter: function (a, i, c, d) {
+      return d
+    }
+  },
   {
     prop: 'username',
     label: '用户姓名',
     width: 130
   },
+
   // 😄 enum 可以直接是数组对象，也可以是请求方法(proTable 内部会执行获取 enum 的这个方法)，下面用户状态也同理
   // 😄 enum 为请求方法时，后台返回的数组对象 key 值不是 label 和 value 的情况，可以在 searchProps 中指定 label 和 value 的 key 值
   {
@@ -23,10 +32,15 @@ export const columns: ColumnProps[] = [
     replaceValue: { 1: '男', 2: '女' }
   },
   {
-    prop: 'url',
+    prop: 'avatar',
     label: '图片',
     width: 120,
-    render: 'image'
+    formatter: function (a, b, c) {
+      return h(ElImage, {
+        size: 50,
+        src: c
+      })
+    }
   },
   {
     prop: 'idCard',
@@ -62,10 +76,8 @@ export const tableData = {
         email: 'b.ghsvvmd@rtdqkurp.ki',
         address: '甘肃省 甘南藏族自治州',
         createTime: '1999-01-01 12:38:46',
-        url: 'https://iamge-1259297738.cos.ap-chengdu.myqcloud.com/img/20220728110013.jpg',
         status: 1,
-        avatar:
-          'https://iamge-1259297738.cos.ap-chengdu.myqcloud.com/img/20220728110013.jpg'
+        avatar: 'http://dummyimage.com/400x400/79f28b/f2798a&text=Jason'
       },
       {
         id: '84077592780415390863',
@@ -76,8 +88,7 @@ export const tableData = {
         address: '江西省 九江市',
         createTime: '1970-01-08 20:10:09',
         status: 0,
-        avatar:
-          'https://iamge-1259297738.cos.ap-chengdu.myqcloud.com/img/20220728110012.jpg'
+        avatar: 'http://dummyimage.com/400x400/79f28b/f2798a&text=Jason'
       },
       {
         id: '36311658441751014506',
@@ -89,8 +100,7 @@ export const tableData = {
         address: '河南省 许昌市',
         createTime: '1976-07-14 00:45:17',
         status: 0,
-        avatar:
-          'https://iamge-1259297738.cos.ap-chengdu.myqcloud.com/img/20220728110012.jpg'
+        avatar: 'http://dummyimage.com/400x400/79f28b/f2798a&text=Jason'
       },
       {
         id: '12579365764122448282',
@@ -102,8 +112,7 @@ export const tableData = {
         address: '甘肃省 武威市',
         createTime: '2008-07-27 21:53:58',
         status: 0,
-        avatar:
-          'https://iamge-1259297738.cos.ap-chengdu.myqcloud.com/img/20220728110015.jpg'
+        avatar: 'http://dummyimage.com/400x400/79f28b/f2798a&text=Jason'
       },
       {
         id: '85110831684265817744',
@@ -115,8 +124,7 @@ export const tableData = {
         address: '重庆 重庆市',
         createTime: '1982-06-06 05:26:27',
         status: 1,
-        avatar:
-          'https://iamge-1259297738.cos.ap-chengdu.myqcloud.com/img/20220728110032.jpg'
+        avatar: 'http://dummyimage.com/400x400/79f28b/f2798a&text=Jason'
       },
       {
         id: '75732177066757782143',
@@ -128,8 +136,7 @@ export const tableData = {
         address: '西藏自治区 昌都地区',
         createTime: '1998-04-24 02:58:34',
         status: 1,
-        avatar:
-          'https://iamge-1259297738.cos.ap-chengdu.myqcloud.com/img/20220728110013.jpg'
+        avatar: 'http://dummyimage.com/400x400/79f28b/f2798a&text=Jason'
       },
       {
         id: '84598383763973132852',
@@ -141,8 +148,7 @@ export const tableData = {
         address: '陕西省 宝鸡市',
         createTime: '1984-11-17 08:53:44',
         status: 0,
-        avatar:
-          'https://iamge-1259297738.cos.ap-chengdu.myqcloud.com/img/20220728110015.jpg'
+        avatar: 'http://dummyimage.com/400x400/79f28b/f2798a&text=Jason'
       },
       {
         id: '36263609473284189507',
@@ -154,8 +160,7 @@ export const tableData = {
         address: '海南省 三亚市',
         createTime: '1989-10-02 01:38:38',
         status: 1,
-        avatar:
-          'https://iamge-1259297738.cos.ap-chengdu.myqcloud.com/img/20220728110015.jpg'
+        avatar: 'http://dummyimage.com/400x400/79f28b/f2798a&text=Jason'
       },
       {
         id: '98545197779673132432',
@@ -167,8 +172,7 @@ export const tableData = {
         address: '辽宁省 锦州市',
         createTime: '2014-10-24 12:02:49',
         status: 0,
-        avatar:
-          'https://iamge-1259297738.cos.ap-chengdu.myqcloud.com/img/20220728110015.jpg'
+        avatar: 'http://dummyimage.com/400x400/79f28b/f2798a&text=Jason'
       },
       {
         id: '87568941884702415898',
@@ -180,8 +184,7 @@ export const tableData = {
         address: '福建省 厦门市',
         createTime: '1983-04-21 20:32:40',
         status: 0,
-        avatar:
-          'https://iamge-1259297738.cos.ap-chengdu.myqcloud.com/img/20220728110032.jpg'
+        avatar: 'http://dummyimage.com/400x400/79f28b/f2798a&text=Jason'
       }
     ],
     pageNum: 1,

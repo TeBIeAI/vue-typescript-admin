@@ -1,23 +1,24 @@
 <template>
-  <el-drawer v-model="drawerVisible" title="列显示" :with-header="false">
-    <!-- <el-table :data="_column">
-      <el-table-column prop="label" label="列名"></el-table-column>
-      <el-table-column v-slot="scope" prop="name" label="显示">
-        <el-switch v-model="scope.row.isShow"> </el-switch>
-      </el-table-column>
-    </el-table> -->
-    <el-checkbox-group v-model="checkList" @change="changeColumn">
-      <el-checkbox v-for="item in _column" :key="item.prop" :label="item.prop">{{
-        item.label
-      }}</el-checkbox>
-    </el-checkbox-group>
-  </el-drawer>
+  <el-checkbox-group v-model="checkList" @change="changeColumn">
+    <Draggable
+      v-model="checkboxList"
+      animation="100"
+      item-key="prop"
+      :move="onMove"
+      @end="draggableEnd"
+    >
+      <template #item="{ element }">
+        <el-checkbox :key="element.prop" :label="element.prop">{{ element.label }}</el-checkbox>
+      </template>
+    </Draggable>
+  </el-checkbox-group>
 </template>
 
 <script setup lang="ts" name="ColumSetting">
 import { useTableContext } from '@/components/hooks/usetableContext'
 import { ref } from 'vue'
 import { ColumnProps } from '/#/table'
+import Draggable from 'vuedraggable'
 
 interface Props {
   column: ColumnProps[]
@@ -28,25 +29,27 @@ const checkList = ref<string[]>([])
 const table = useTableContext()
 
 const changeColumn = (val) => {
-  const column = table.getColumns()
-  console.log(table)
-  // const news = column.filter(i => i.prop ==)
+  table.setColumns(val)
+}
+
+function onMove(e) {
+  if (e.draggedContext.element.draggable === false) return false
+  return true
 }
 
 const _column = props.column.filter((i) => {
-  if (i.type !== 'index' && i.prop) {
+  if (i.prop) {
     checkList.value.push(i.prop)
   }
-  return i.type !== 'index' && i.prop
+  return i.prop
 })
+const checkboxList = ref(_column)
+console.log(checkboxList)
 
-const drawerVisible = ref<boolean>(false)
-
-const openDrawer = () => (drawerVisible.value = true)
-
-defineExpose({
-  openDrawer
-})
+const draggableEnd = (a, b) => {
+  console.log(checkboxList.value)
+  table.setColumns(checkboxList)
+}
 </script>
 
 <style scoped></style>

@@ -1,4 +1,5 @@
 import type { ButtonType, TagProps } from 'element-plus'
+import type { VNode } from 'vue'
 
 type TypeProps = 'index' | 'selection' | 'expand'
 
@@ -34,4 +35,5 @@ export interface ColumnProps {
   // 渲染为Tag时:el-tag 组件的size
   size?: TagProps['size']
   buttons?: OptButton[]
+  [key: string]: any
 }
