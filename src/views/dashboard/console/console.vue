@@ -1,11 +1,15 @@
 <template>
   <HlTable :table-data="tableData.data" :columns="columns" @current-change="getList"> </HlTable>
+  <HlTable :table-data="tableData.data" :columns="columns1" @current-change="getList"> </HlTable>
 </template>
 
 <script lang="ts" setup name="componentName">
 import HlTable from '@/components/Table'
+import { cloneDeep } from 'lodash'
 import { columns, tableData } from './column'
 import { OptButton } from '/#/table'
+
+const columns1 = cloneDeep(columns)
 
 const optButton: OptButton[] = [
   {

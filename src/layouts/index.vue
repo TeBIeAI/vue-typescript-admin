@@ -6,10 +6,7 @@
         :width="leftMenuWidth + 'px'"
         class="layout-sider"
       >
-        <PageAsideMenu
-          style="min-height: 100vh"
-          :collapsed="collapsed"
-        ></PageAsideMenu>
+        <PageAsideMenu style="min-height: 100vh" :collapsed="collapsed"></PageAsideMenu>
       </el-aside>
       <div v-show="showSideDrawder">
         <el-drawer

@@ -16,7 +16,7 @@
       </el-tooltip>
     </div>
   </div>
-  <el-table ref="HlTableRef" :data="props.tableData.datalist">
+  <el-table ref="HlTableRef" v-bind="getTableAttrs">
     <template v-for="(item, key) in TableColumn" :key="key + '-column'">
       <el-table-column v-if="item.isShow" v-bind="item">
         <template v-if="item.render" #default="scope">
@@ -44,33 +44,55 @@
   </div>
 
   <!-- 列显示配置 -->
-  <ColumnSetting v-if="columns.length" ref="colRef" :column="columns" />
+  <ColumnSetting v-if="columns.length" ref="colRef" :column="TableColumn" />
 </template>
 
 <script lang="ts" setup name="HlTable">
 import FieldRender from '../render/index.vue'
 import ColumnSetting from '../columnSetting/index.vue'
-import { ref, watch } from 'vue'
+import { ref, computed, toRaw, unref } from 'vue'
 import type { ElTable } from 'element-plus'
 import { ColumnProps } from '/#/table'
 import { Search, Refresh, Printer, Operation } from '@element-plus/icons-vue'
+import { useColumns } from '@/components/hooks/useColumn'
+import { createTableContext } from '@/components/hooks/usetableContext'
 
 const HlTableRef = ref<InstanceType<typeof ElTable>>()
 
 interface HTableProps {
   columns: ColumnProps[]
   tableData: any
-  border?: boolean
-  stripe?: boolean
   pagination?: boolean
 }
 
 const props = withDefaults(defineProps<HTableProps>(), {
-  columns: () => [],
+  columns: () => [] as ColumnProps[],
   tableData: {},
-  border: false,
-  stripe: false,
   pagination: true
+})
+
+const TableColumn = ref<ColumnProps[]>()
+TableColumn.value = props.columns.map((i) => {
+  i.isShow = i.isShow ?? true
+  return i
+})
+
+const { getColumns, setColumns } = useColumns(props.columns)
+
+const actions = {
+  getColumns,
+  setColumns
+}
+createTableContext(actions)
+
+const isStripe = ref<boolean>(true)
+const tableSize = ref<string>('default')
+const getTableAttrs = computed(() => {
+  return {
+    data: props.tableData.datalist,
+    stripe: isStripe.value,
+    tableSize: tableSize.value
+  }
 })
 
 interface Emits {
@@ -83,15 +105,7 @@ const currentChange = (size: number) => {
   emits('current-change', size)
 }
 
-const TableColumn = ref<ColumnProps[]>()
-
-TableColumn.value = props.columns.map((i) => {
-  i.isShow = i.isShow ?? true
-  return i
-})
-
 const colRef = ref()
-// const colSetting = ref<Partial<ColumnProps[]>>()
 
 const openDrawerHandle = () => {
   colRef.value.openDrawer()
