@@ -1,5 +1,4 @@
 import type { ButtonType, TagProps } from 'element-plus'
-import type { VNode } from 'vue'
 
 type TypeProps = 'index' | 'selection' | 'expand'
 
@@ -17,10 +16,17 @@ interface OptButton {
   click?: (row: any, field: ColumnProps) => void
 }
 
+export interface HTableProps {
+  columns: ColumnProps[]
+  tableData: any
+  pagination?: boolean
+  actionColumn?: ColumnProps | null
+}
+
 export interface ColumnProps {
   type?: TypeProps
   label: string
-  prop?: string
+  prop: string
   width?: number | string
   minWidth?: number | string
   sortable?: boolean
@@ -35,5 +41,5 @@ export interface ColumnProps {
   // 渲染为Tag时:el-tag 组件的size
   size?: TagProps['size']
   buttons?: OptButton[]
-  [key: string]: any
+  formatter?: any
 }

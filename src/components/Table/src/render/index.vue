@@ -22,7 +22,7 @@
   </div>
 
   <!-- 按钮组 -->
-  <div v-if="field.render === 'buttons' && field.buttons">
+  <!-- <div v-if="field.render === 'buttons' && field.buttons">
     <template v-for="(btn, idx) in field.buttons" :key="idx">
       <template v-if="btn.display ? btn.display(row, field) : true">
         <el-tooltip v-if="btn.render === 'tipButton'" :content="btn.text">
@@ -32,13 +32,13 @@
         </el-tooltip>
       </template>
     </template>
-  </div>
+  </div> -->
 </template>
 
 <script lang="ts" setup name="componentName">
 import { TableColumnCtx } from 'element-plus/es/components/table/src/table-column/defaults'
-import { ref, watch } from 'vue'
-import { ColumnProps, OptButton } from '/#/table'
+import { ref } from 'vue'
+import { ColumnProps } from '/#/table'
 
 interface Props {
   field: ColumnProps
@@ -61,21 +61,8 @@ if (fieldName.value && fieldName.value.indexOf('.') > -1) {
   fieldValue.value = val.value
 }
 
-watch(
-  () => props,
-  (val) => {
-    debugger
-  }
-)
-
 const getTagType = (value: string, custom: any) => {
   return (custom && custom[value]) ?? ''
-}
-
-const getButtonClick = (btn: OptButton) => {
-  if (btn?.click && typeof btn.click === 'function') {
-    btn.click(props.row, props.field)
-  }
 }
 </script>
 <style scoped></style>

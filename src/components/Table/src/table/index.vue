@@ -62,34 +62,28 @@ import { ref, computed, toRaw, unref } from 'vue'
 import type { ElTable } from 'element-plus'
 import { ColumnProps } from '/#/table'
 import { Search, Refresh, Printer, Operation } from '@element-plus/icons-vue'
-import { useColumns } from '@/components/hooks/useColumn'
-import { createTableContext } from '@/components/hooks/usetableContext'
+import { useColumns } from '@/components/Table/hooks/useColumn'
+import { createTableContext } from '@/components/Table/hooks/usetableContext'
 import { ClickOutside as vClickOutside } from 'element-plus'
 
-const HlTableRef = ref<InstanceType<typeof ElTable>>()
-
-interface HTableProps {
+export interface HTableProps {
   columns: ColumnProps[]
   tableData: any
   pagination?: boolean
+  actionColumn?: ColumnProps | null
 }
+
+const HlTableRef = ref<InstanceType<typeof ElTable>>()
 
 const props = withDefaults(defineProps<HTableProps>(), {
   columns: () => [] as ColumnProps[],
   tableData: {},
-  pagination: true
+  pagination: true,
+  actionColumn: () => null
 })
 
-// const TableColumn = ref<ColumnProps[]>()
-// TableColumn.value = props.columns.map((i) => {
-//   i.isShow = i.isShow ?? true
-//   return i
-// })
-
-// const cmp = compu
-
-const { getColumns, setColumns } = useColumns(props.columns)
-const TableColumn = computed(() => getColumns())
+const { getColumns, setColumns } = useColumns(props)
+const TableColumn = computed(() => toRaw(getColumns()))
 
 const popoverRef = ref()
 
