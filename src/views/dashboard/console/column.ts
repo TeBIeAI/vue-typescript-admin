@@ -1,4 +1,4 @@
-import { ElImage } from 'element-plus'
+import { ElImage, ElInput, ElPopover } from 'element-plus'
 import { h } from 'vue'
 import { ColumnProps } from '/#/table'
 
@@ -17,6 +17,7 @@ export const columns: ColumnProps[] = [
   {
     prop: 'username',
     label: '用户姓名',
+    edit: true,
     width: 130
   },
 
@@ -36,10 +37,33 @@ export const columns: ColumnProps[] = [
     label: '图片',
     width: 120,
     formatter: function (a, b, c) {
-      return h(ElImage, {
-        size: 50,
-        src: c
-      })
+      // return h(ElImage, {
+      //   size: 50,
+      //   src: c
+      // })
+
+      const DefaultComp = h('span', '我是DefaultComp')
+      return h(
+        ElPopover,
+        { trigger: 'click', visible: true },
+        {
+          trigger: () => h(ElInput, { placeholder: '你好啊' }),
+          default: () =>
+            h(
+              'span',
+              {
+                style: {
+                  color: 'red',
+                  width: '90px',
+                  display: 'inline-block'
+                }
+              },
+              {
+                default: () => '我的default'
+              }
+            )
+        }
+      )
     }
   },
   {

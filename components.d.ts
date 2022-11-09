@@ -37,6 +37,7 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Table: typeof import('./src/components/Table/src/table/index.vue')['default']
+    TableAction: typeof import('./src/components/Table/src/TableAction/index.vue')['default']
   }
   export interface ComponentCustomProperties {
     vPopover: typeof import('element-plus/es')['ElPopoverDirective']

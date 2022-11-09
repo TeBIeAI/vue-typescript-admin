@@ -1,6 +1,7 @@
-import { unref, ref, toRaw, watch } from 'vue'
+import { unref, ref, watch } from 'vue'
 import { ColumnProps, HTableProps } from '/#/table'
-import { cloneDeep, isArray } from 'lodash-es'
+import { cloneDeep } from 'lodash-es'
+import { renderColumn } from '../src/editColumn'
 
 export function useColumns(props: HTableProps) {
   const columnsRef = ref(unref(props.columns))
@@ -14,6 +15,10 @@ export function useColumns(props: HTableProps) {
     columnsRef.value.forEach((item: ColumnProps) => {
       item.isShow = item.isShow ?? true
       item.fiexd = item.prop == 'action' ? 'right' : item.fiexd || undefined
+      const { edit } = item
+      // if (edit) {
+      //   item.formatter = renderColumn(item)
+      // }
     })
     cacheColumns.value = cloneDeep(columnsRef)
     return unref(columnsRef)

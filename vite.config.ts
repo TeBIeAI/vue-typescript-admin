@@ -7,7 +7,6 @@ import { createVitePlugins } from './build/vite/plugin'
 export default defineConfig(({ mode }: ConfigEnv) => {
   const root = process.cwd()
   const env = loadEnv(mode, root)
-  console.log(env)
   const viteEnv = wrapperEnv(env)
   const { VITE_PUBLIC_PATH, VITE_PORT } = viteEnv
   return {
@@ -15,7 +14,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
     resolve: {
       alias: {
         '@': resolve(__dirname, 'src'),
-        cps: resolve(__dirname, 'src/components')
+        '/#/': resolve(__dirname, 'types')
       },
       extensions: ['.js', '.json', '.ts', '.vue'] // 使用路径别名时想要省略的后缀名，可以自己 增减
     },

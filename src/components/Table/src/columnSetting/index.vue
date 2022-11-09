@@ -23,7 +23,7 @@ import { Rank } from '@element-plus/icons-vue'
 const checkList = ref<string[]>([])
 const table = useTableContext()
 
-const changeColumn = (val) => {
+const changeColumn = () => {
   table.setColumns(state.tableColumn, checkList)
 }
 
@@ -33,7 +33,6 @@ const state = reactive({
 state.tableColumn.forEach((i) => checkList.value.push(i.prop))
 
 const draggableEnd = () => {
-  // const column = state.tableColumn.filter((item) => checkList.value.includes(item.prop))
   table.setColumns(state.tableColumn, checkList)
 }
 </script>

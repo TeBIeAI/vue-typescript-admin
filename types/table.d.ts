@@ -42,4 +42,5 @@ export interface ColumnProps {
   size?: TagProps['size']
   buttons?: OptButton[]
   formatter?: any
+  edit?: boolean
 }
