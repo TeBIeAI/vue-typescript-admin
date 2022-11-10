@@ -15,6 +15,8 @@ export const columns: ColumnProps[] = [
   {
     prop: 'username',
     label: '用户姓名',
+    editComponent: 'el-input',
+    editRule: true,
     edit: true,
     width: 130
   },

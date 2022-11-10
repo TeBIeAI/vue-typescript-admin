@@ -16,9 +16,9 @@ export function useColumns(props: HTableProps) {
       item.isShow = item.isShow ?? true
       item.fiexd = item.prop == 'action' ? 'right' : item.fiexd || undefined
       const { edit } = item
-      // if (edit) {
-      //   item.formatter = renderColumn(item)
-      // }
+      if (edit) {
+        item.formatter = renderColumn(item)
+      }
     })
     cacheColumns.value = cloneDeep(columnsRef)
     return unref(columnsRef)

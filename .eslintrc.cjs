@@ -28,6 +28,8 @@ module.exports = defineConfig({
   ],
   // https://cn.eslint.org/docs/rules/
   rules: {
+    // 关闭驼峰属性检测
+    'vue/attribute-hyphenation': 'off',
     'no-undef': 'off',
     // 禁止使用 var
     'no-var': 'error',

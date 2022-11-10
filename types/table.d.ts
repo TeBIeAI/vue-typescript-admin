@@ -43,4 +43,6 @@ export interface ColumnProps {
   buttons?: OptButton[]
   formatter?: any
   edit?: boolean
+  editRule?: boolean
+  editComponent?: string
 }
