@@ -1,61 +1,43 @@
 {
   "compilerOptions": {
+    // 指定ECMAScript目标版本
     "target": "esnext",
+    // 指定生成哪个模块系统代码
     "module": "esnext",
+    // 决定如何处理模块
     "moduleResolution": "node",
     "strict": true,
+    // 是否强制代码中使用的模块文件名必须和文件系统中的文件名保持大小写一致
     "forceConsistentCasingInFileNames": true,
+    // 允许从没有设置默认导出的模块中默认导入。这并不影响代码的输出，仅为了类型检查。
     "allowSyntheticDefaultImports": true,
     "strictFunctionTypes": false,
+    // 支持jsx语法
     "jsx": "preserve",
+    // 解析非相对模块名的基准目录
     "baseUrl": ".",
     "allowJs": true,
+    // 生成相应的 .map文件
     "sourceMap": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "experimentalDecorators": true,
-    "lib": [
-      "dom",
-      "esnext"
-    ],
-    "types": [
-      "vite/client"
-    ],
-    "typeRoots": [
-      "./node_modules/@types/",
-      "./types"
-    ],
+    "lib": ["dom", "esnext"],
+    "types": ["vite/client"],
+    "typeRoots": ["./node_modules/@types/", "./types"],
     "noImplicitAny": false,
+    // 忽略所有的声明文件（ *.d.ts）的类型检查
     "skipLibCheck": true,
     "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "/#/*": [
-        "types/*"
-      ]
+      "@/*": ["src/*"],
+      "/#/*": ["types/*"]
     }
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "src/components/**/*.vue",
-    "types/**/*.d.ts",
-    "types/**/*.ts",
-    "build/**/*.ts",
-    "build/**/*.d.ts",
-    "mock/**/*.ts",
-    "components.d.ts",
-    "vite.config.ts",
-    "types"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/*.js"
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "types"],
+  "exclude": ["node_modules", "dist", "**/*.js"],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
   ]
 }

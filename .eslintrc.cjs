@@ -28,6 +28,7 @@ module.exports = defineConfig({
   ],
   // https://cn.eslint.org/docs/rules/
   rules: {
+    'no-undef': 'off',
     // 禁止使用 var
     'no-var': 'error',
     semi: 'off',
@@ -69,7 +70,7 @@ module.exports = defineConfig({
     'vue/multi-word-component-names': [
       'error',
       {
-        ignores: ['index'] //需要忽略的组件名
+        ignores: ['index', 'console'] //需要忽略的组件名
       }
     ],
     // 优先使用驼峰，element 组件除外

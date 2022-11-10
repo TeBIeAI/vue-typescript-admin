@@ -6,15 +6,13 @@
     @current-change="getList"
   >
   </HlTable>
-  <!-- <HlTable :table-data="tableData.data" :columns="columns1" @current-change="getList"> </HlTable> -->
 </template>
 
 <script lang="ts" setup name="componentName">
-import HlTable from '@/components/Table'
+import { HlTable, TableAction } from '@/components/Table'
 import { h, reactive } from 'vue'
 import { columns, tableData } from './column'
 import { ColumnProps } from '/#/table'
-import { TableAction } from '../../../components/Table/src/TableAction'
 
 const actionColumn = reactive<ColumnProps>({
   prop: 'action',
@@ -55,28 +53,8 @@ const actionColumn = reactive<ColumnProps>({
   }
 })
 
-// const columns1 = cloneDeep(columns)
-
-// const optButton: OptButton[] = [
-//   {
-//     name: 'edit',
-//     render: 'tipButton',
-//     text: '编辑',
-//     type: 'primary',
-//     click: (row, col) => {
-//       alert(row['age'])
-//     }
-//   }
-// ]
-
-// columns.push({
-//   label: '操作',
-//   render: 'buttons',
-//   buttons: optButton
-// })
-
 const getList = (a) => {
-  debugger
+  console.log(a)
 }
 </script>
 <style scoped></style>

@@ -16,7 +16,7 @@ interface OptButton {
   click?: (row: any, field: ColumnProps) => void
 }
 
-export interface HTableProps {
+interface HTableProps {
   columns: ColumnProps[]
   tableData: any
   pagination?: boolean
