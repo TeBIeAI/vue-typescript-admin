@@ -1,9 +1,9 @@
 import { ElImage } from 'element-plus'
 import { h } from 'vue'
-import { ColumnProps } from '/#/table'
+import { TableColumn } from '/#/table'
 
 // 表格配置项
-export const columns: ColumnProps[] = [
+export const columns: TableColumn[] = [
   {
     prop: 'index',
     label: 'No',
@@ -45,7 +45,10 @@ export const columns: ColumnProps[] = [
   },
   {
     prop: 'idCard',
-    label: '身份证号'
+    label: '身份证号',
+    editComponent: 'el-input',
+    editRule: true,
+    edit: true
   },
   { prop: 'email', label: '邮箱' },
   { prop: 'address', label: '居住地址' },

@@ -1,18 +1,18 @@
 import { unref, ref, watch } from 'vue'
-import { ColumnProps, HTableProps } from '/#/table'
+import { TableColumn, HTableProps } from '/#/table'
 import { cloneDeep } from 'lodash-es'
 import { renderColumn } from '../src/editColumn'
 
 export function useColumns(props: HTableProps) {
   const columnsRef = ref(unref(props.columns))
-  const _actionColumn = ref<ColumnProps>()
+  const _actionColumn = ref<TableColumn>()
   const cacheColumns = ref()
 
-  const getColumns = (): ColumnProps[] => {
+  const getColumns = (): TableColumn[] => {
     if (cacheColumns.value) return unref(columnsRef)
     // 可以再此处进行列的权限验证
     initActionColumn(props, props.columns)
-    columnsRef.value.forEach((item: ColumnProps) => {
+    columnsRef.value.forEach((item: TableColumn) => {
       item.isShow = item.isShow ?? true
       item.fiexd = item.prop == 'action' ? 'right' : item.fiexd || undefined
       const { edit } = item
@@ -33,7 +33,7 @@ export function useColumns(props: HTableProps) {
 
   const initActionColumn = (props, columns) => {
     const { actionColumn } = props
-    const findAction = columns.find((item: ColumnProps) => item.prop === 'action')
+    const findAction = columns.find((item: TableColumn) => item.prop === 'action')
     if (findAction) {
       _actionColumn.value = findAction
     } else {
@@ -42,14 +42,14 @@ export function useColumns(props: HTableProps) {
     if (_actionColumn.value) columns.push(_actionColumn.value)
   }
 
-  const setColumns = (columnList: ColumnProps[], propList: string[] | null) => {
+  const setColumns = (columnList: TableColumn[], propList: string[]): any => {
     if (!columnList || !propList) return
 
     const columns = cloneDeep(unref(columnList))
     if (!unref(propList)) return (columnsRef.value = columns)
     if (!unref(propList).length) return (columnsRef.value = [])
 
-    const newColumns: ColumnProps[] = []
+    const newColumns: TableColumn[] = []
 
     const index = unref(columnList).findIndex((i) => i.prop === 'action')
     if (index > -1) unref(columnList).splice(index, 1)
@@ -57,7 +57,7 @@ export function useColumns(props: HTableProps) {
     unref(columnList).forEach((item) => {
       if (unref(propList).includes(item.prop)) newColumns.push(item)
     })
-    if (_actionColumn.value) newColumns.push(_actionColumn.value as ColumnProps)
+    if (_actionColumn.value) newColumns.push(_actionColumn.value as TableColumn)
     columnsRef.value = newColumns
   }
 

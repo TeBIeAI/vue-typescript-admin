@@ -23,7 +23,7 @@
     </div>
   </div>
   <el-table ref="HlTableRef" v-bind="getTableAttrs">
-    <template v-for="(item, key) in TableColumn" :key="key + '-column'">
+    <template v-for="(item, key) in tableColumns" :key="key + '-column'">
       <el-table-column v-if="item.isShow" v-bind="item">
         <template v-if="item.render" #default="scope">
           <FieldRender
@@ -51,7 +51,7 @@
 
   <!-- 列显示配置 -->
   <el-popover ref="popoverRef" trigger="click" virtual-triggering persistent>
-    <ColumnSetting ref="colRef" :column="(TableColumn as ColumnProps[])" />
+    <ColumnSetting ref="colRef" :column="(tableColumns as TableColumn[])" />
   </el-popover>
 </template>
 
@@ -60,36 +60,45 @@ import FieldRender from '../render/index.vue'
 import ColumnSetting from '../columnSetting/index.vue'
 import { ref, computed, toRaw, unref } from 'vue'
 import type { ElTable } from 'element-plus'
-import { ColumnProps } from '/#/table'
+import { TableColumn } from '/#/table'
 import { Search, Refresh, Printer, Operation } from '@element-plus/icons-vue'
 import { useColumns } from '@/components/Table/hooks/useColumn'
 import { createTableContext } from '@/components/Table/hooks/usetableContext'
 import { ClickOutside as vClickOutside } from 'element-plus'
 
-export interface HTableProps {
-  columns: ColumnProps[]
+export interface Emits {
+  (e: 'edit-change', newVal: any): void
+  (e: 'edit-enter', record: object): void
+  (e: 'current-page-change', num: number): void
+}
+
+const emit = defineEmits<Emits>()
+
+interface HTableProps {
+  columns: TableColumn[]
   tableData: any
   pagination?: boolean
-  actionColumn?: ColumnProps | null
+  actionColumn?: TableColumn | null
 }
 
 const HlTableRef = ref<InstanceType<typeof ElTable>>()
 
 const props = withDefaults(defineProps<HTableProps>(), {
-  columns: () => [] as ColumnProps[],
+  columns: () => [] as TableColumn[],
   tableData: {},
   pagination: true,
   actionColumn: () => null
 })
 
 const { getColumns, setColumns } = useColumns(props)
-const TableColumn = computed(() => toRaw(getColumns()))
+const tableColumns = computed(() => toRaw(getColumns()))
 
 const popoverRef = ref()
 
 const actions = {
   getColumns,
-  setColumns
+  setColumns,
+  emit
 }
 createTableContext(actions)
 
@@ -103,14 +112,8 @@ const getTableAttrs = computed(() => {
   }
 })
 
-interface Emits {
-  (e: 'current-change', num: number)
-}
-
-const emits = defineEmits<Emits>()
-
 const currentChange = (size: number) => {
-  emits('current-change', size)
+  emit('current-page-change', size)
 }
 
 const onClickOutside = () => {

@@ -10,6 +10,7 @@ const designSetting = useDesignSettingStoreWithOut()
 
 <style lang="scss">
 @import '@/styles/reset.css';
+@import '@/styles/common.scss';
 .-primary-text-color {
   color: v-bind('designSetting.appTheme');
 }

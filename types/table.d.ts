@@ -12,18 +12,18 @@ interface OptButton {
   render: string
   text: string
   type: ButtonType
-  display?: (row: any, field: ColumnProps) => void
-  click?: (row: any, field: ColumnProps) => void
+  display?: (row: any, field: TableColumn) => void
+  click?: (row: any, field: TableColumn) => void
 }
 
 interface HTableProps {
-  columns: ColumnProps[]
+  columns: TableColumn[]
   tableData: any
   pagination?: boolean
-  actionColumn?: ColumnProps | null
+  actionColumn?: TableColumn | null
 }
 
-export interface ColumnProps {
+export interface TableColumn {
   type?: TypeProps
   label: string
   prop: string

@@ -27,14 +27,14 @@ export default defineComponent({
       type: String,
       default: null
     },
-    buttons: {
+    actions: {
       type: Array,
       default: null
     }
   },
   setup(props) {
     const getButtonActions = computed(() => {
-      return props.buttons.map((item: ButtonItem) => {
+      return props.actions.map((item: ButtonItem) => {
         return {
           base: {
             type: item.type ?? 'primary',

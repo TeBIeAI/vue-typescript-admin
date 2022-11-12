@@ -1,5 +1,5 @@
 import { ElPopover } from 'element-plus'
-import { h, ref } from 'vue'
+import { h } from 'vue'
 import { componentMap } from '../componentMap'
 import { ComponentType } from '../types'
 
@@ -15,15 +15,28 @@ export const CellComponent = (
   { attrs }
 ) => {
   const comp = componentMap.get(editComponentType)
+  console.log(rule)
+
   const DefaultComp = h(comp, attrs)
   return h(
     ElPopover,
     {
       visible: !!ruleVisible,
-      content: ruleMessage
+      content: ruleMessage,
+      placement: 'top'
     },
     {
-      reference: () => DefaultComp
+      reference: () => DefaultComp,
+      default: () =>
+        h(
+          'span',
+          {
+            class: 'danger'
+          },
+          {
+            default: () => ruleMessage
+          }
+        )
     }
   )
 }

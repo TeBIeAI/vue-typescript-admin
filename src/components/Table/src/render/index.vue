@@ -38,10 +38,10 @@
 <script lang="ts" setup name="componentName">
 import { TableColumnCtx } from 'element-plus/es/components/table/src/table-column/defaults'
 import { ref } from 'vue'
-import { ColumnProps } from '/#/table'
+import { TableColumn } from '/#/table'
 
 interface Props {
-  field: ColumnProps
+  field: TableColumn
   row: any
   column: TableColumnCtx<any>
   index: number
